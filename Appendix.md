@@ -50,3 +50,44 @@ def Binomial(Option,K,T,S,sigma,r,N):
     end=time.process_time()
     return option_price,end-start
   ```
+### plot Binomial model function 
+```python
+K = 80
+T=1
+S0=80
+sigma = 0.2
+r = 0.05
+N=range(1,200)
+calls_list=[]
+for n in N:
+    p,t = Binomial("C", K, T, S0, sigma, r, n)
+    calls_list.append(p)
+
+plt.plot(N, calls_list, label="Binomial price")
+plt.xlabel("Number of time steps")
+plt.ylabel("European call option price")
+plt.legend()
+plt.show()
+```
+### Plot Number of time steps V.S running time figures
+```python
+K=80
+T=1
+S=80
+sigma=0.2
+r=0.05
+N2=range(1,2300,10)
+time_e=[]
+time_ec=[]
+for i in N2:
+    p1,t1=Binomial("P",K,T,S,sigma,r,i)
+    p3,t3=Binomial("C",K,T,S,sigma,r,i)
+    time_e.append(t1)
+    time_ec.append(t3)
+plt.plot(N2, time_e,label='European Put Time')
+plt.plot(N2, time_ec,label='European Call Time')
+plt.ylabel('Compute time')
+plt.xlabel("Number of time steps")
+plt.legend()
+plt.show()
+```
